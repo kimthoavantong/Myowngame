@@ -36,6 +36,8 @@ bool HelloWorld::init()
     this->addChild(backGround,-1);
 
     SimpleAudioEngine::getInstance()->preloadEffect(Music_Effect_Click);
+    SimpleAudioEngine::getInstance()->preloadBackgroundMusic(Music_Background_Menu);
+    SimpleAudioEngine::getInstance()->playBackgroundMusic(Music_Background_Menu, true);
 
     HelloWorld::addButtonPlay();
     HelloWorld::addButtonShop();
@@ -62,7 +64,9 @@ void HelloWorld::addButtonPlay()
             {
             case cocos2d::ui::Widget::TouchEventType::BEGAN:
             {
+                SimpleAudioEngine::getInstance()->stopBackgroundMusic(true);
                 SimpleAudioEngine::getInstance()->playEffect(Music_Effect_Click, false);
+
                 break;
             }
             case cocos2d::ui::Widget::TouchEventType::ENDED:
@@ -91,6 +95,7 @@ void HelloWorld::addButtonShop()
             {
             case cocos2d::ui::Widget::TouchEventType::BEGAN:
             {
+                SimpleAudioEngine::getInstance()->stopBackgroundMusic(true);
                 SimpleAudioEngine::getInstance()->playEffect(Music_Effect_Click, false);
             }
             case cocos2d::ui::Widget::TouchEventType::ENDED:
@@ -135,6 +140,7 @@ void HelloWorld::addButtonQuick()
             {
             case cocos2d::ui::Widget::TouchEventType::BEGAN:
             {
+                SimpleAudioEngine::getInstance()->stopBackgroundMusic(true);
                 SimpleAudioEngine::getInstance()->playEffect(Music_Effect_Click, false);
                 break;
             }

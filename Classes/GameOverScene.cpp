@@ -34,7 +34,8 @@ bool GameOver::init()
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     
     CCLOG("Diem %i", scoreOver);
-    
+    SimpleAudioEngine::getInstance()->playBackgroundMusic(Music_Background_GameOver, true);
+
     auto backGround = Sprite::create(BackGround_full_one);
     backGround->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2));
     this->addChild(backGround,-1);
@@ -65,6 +66,7 @@ void GameOver::addButtonRestart()
             {
             case cocos2d::ui::Widget::TouchEventType::BEGAN:
             {
+                SimpleAudioEngine::getInstance()->stopBackgroundMusic(true);
                 SimpleAudioEngine::getInstance()->playEffect(Music_Effect_Click, false);
                 break;
             }
@@ -94,6 +96,7 @@ void GameOver::addButtonResume()
             {
             case cocos2d::ui::Widget::TouchEventType::BEGAN:
             {
+                SimpleAudioEngine::getInstance()->stopBackgroundMusic(true);
                 SimpleAudioEngine::getInstance()->playEffect(Music_Effect_Click, false);
                 break;
             }
@@ -140,6 +143,7 @@ void GameOver::addButtonQuit()
             {
             case cocos2d::ui::Widget::TouchEventType::ENDED:
             {
+                SimpleAudioEngine::getInstance()->stopBackgroundMusic(true);
                 Director::getInstance()->end();
                 break;
             }
