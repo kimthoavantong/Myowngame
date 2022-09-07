@@ -4,33 +4,33 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>enemybig1.png</key>
+            <key>tile000.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
-                <string>{32,32}</string>
+                <string>{64,64}</string>
                 <key>spriteSourceSize</key>
-                <string>{32,32}</string>
+                <string>{64,64}</string>
                 <key>textureRect</key>
-                <string>{{0,0},{32,32}}</string>
+                <string>{{0,0},{64,64}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>enemybig2.png</key>
+            <key>tile001.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
-                <string>{32,32}</string>
+                <string>{64,64}</string>
                 <key>spriteSourceSize</key>
-                <string>{32,32}</string>
+                <string>{64,64}</string>
                 <key>textureRect</key>
-                <string>{{32,0},{32,32}}</string>
+                <string>{{64,0},{64,64}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -46,9 +46,9 @@
             <key>realTextureFileName</key>
             <string>enemybig.png</string>
             <key>size</key>
-            <string>{64,32}</string>
+            <string>{128,64}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:bf4cb9aee7f8c70f825ac0ac5e1822c8:8acee713b634042cdd8aa50919dcf462:c6478e095e2b8b4c45641ba9a4522e6a$</string>
+            <string>$TexturePacker:SmartUpdate:62c0d9c77f85857a55d8b67b80d1ce67:2bfb2eb04e32cd37224f574990511b4a:c6478e095e2b8b4c45641ba9a4522e6a$</string>
             <key>textureFileName</key>
             <string>enemybig.png</string>
         </dict>

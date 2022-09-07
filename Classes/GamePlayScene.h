@@ -61,6 +61,7 @@ public:
     bool check = false; // check để add qua
     int lvDan = 1;
     int mang = 3;
+    bool setGameOver;
     void addDanBoss1(float dt);
 
     CREATE_FUNC(GamePlayScene);

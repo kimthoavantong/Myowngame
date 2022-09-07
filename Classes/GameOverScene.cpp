@@ -9,15 +9,18 @@
 
 using namespace cocos2d;
 using namespace experimental;
+using namespace CocosDenshion;
 
 USING_NS_CC;
 
 int scoreOver;
 int highScoreOver;
-Scene* GameOver::createScene(int score,int highScore)
+bool getGameOver;
+Scene* GameOver::createScene(int score,int highScore,bool setGameover)
 {
     highScoreOver = highScore;
     scoreOver = score;
+    getGameOver = setGameover;
     return GameOver::create();
 }
 
@@ -53,12 +56,18 @@ void GameOver::addButtonRestart()
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
     buttonRestart = cocos2d::ui::Button::create(GameOver_Sprite_ButtonRestart);
-    buttonRestart->setPosition(Vec2(visibleSize.width / 2 + origin.x , origin.y + visibleSize.height / 2));
+    buttonRestart->setPosition(Vec2(visibleSize.width * 0.5 + origin.x - buttonRestart->getContentSize().width / 2 - 10,
+        origin.y + visibleSize.height / 2 - buttonRestart->getContentSize().height - 20));
     this->addChild(buttonRestart, 1);
     buttonRestart->addTouchEventListener([&](Ref* sender, cocos2d::ui::Widget::TouchEventType type)
         {
             switch (type)
             {
+            case cocos2d::ui::Widget::TouchEventType::BEGAN:
+            {
+                SimpleAudioEngine::getInstance()->playEffect(Music_Effect_Click, false);
+                break;
+            }
             case cocos2d::ui::Widget::TouchEventType::ENDED:
             {
                 auto moveSceneGamePlayScene = GamePlayScene::createPhysicsWorld();
@@ -76,13 +85,18 @@ void GameOver::addButtonResume()
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     buttonResume = cocos2d::ui::Button::create(GameOver_Sprite_ButtonResume);
-    buttonResume->setPosition(Vec2(visibleSize.width / 2 + origin.x,
+    buttonResume->setPosition(Vec2(visibleSize.width * 0.5 + origin.x + buttonResume->getContentSize().width/2 + 10,
         origin.y +  visibleSize.height / 2 - buttonResume->getContentSize().height - 20));
     this->addChild(buttonResume, 1);
     buttonResume->addTouchEventListener([&](Ref* sender, cocos2d::ui::Widget::TouchEventType type)
         {
             switch (type)
             {
+            case cocos2d::ui::Widget::TouchEventType::BEGAN:
+            {
+                SimpleAudioEngine::getInstance()->playEffect(Music_Effect_Click, false);
+                break;
+            }
             case cocos2d::ui::Widget::TouchEventType::ENDED:
             {
                 auto moveSceneHelloWorld = HelloWorld::createScene();
@@ -141,16 +155,36 @@ void GameOver::addLabelScore()
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
+
+    if (getGameOver == true)
+    {
+        String* playScore = String::createWithFormat("GAME OVER");
+        gameOver = Label::createWithTTF(playScore->getCString(), Font_Arial, visibleSize.height * 0.2);
+        gameOver->setAnchorPoint(Vec2(0.5, 0.5));
+        gameOver->setPosition(Vec2(visibleSize.width * 0.5, visibleSize.height * 0.8));
+        gameOver->setColor(Color3B::WHITE);
+        this->addChild(gameOver);
+    }
+    else
+    {
+        String* playScore = String::createWithFormat("YOU WIN");
+        labelWin = Label::createWithTTF(playScore->getCString(), Font_Arial, visibleSize.height * 0.2);
+        labelWin->setAnchorPoint(Vec2(0.5, 0.5));
+        labelWin->setPosition(Vec2(visibleSize.width * 0.5, visibleSize.height * 0.8));
+        labelWin->setColor(Color3B::WHITE);
+        this->addChild(labelWin);
+    }
+
     String* playScore = String::createWithFormat("Score %i",scoreOver);
     labelScore = Label::createWithTTF(playScore->getCString(), Font_Arial, visibleSize.height * 0.05);
     labelScore->setAnchorPoint(Vec2(0.5, 0.5));
-    labelScore->setPosition(Vec2(visibleSize.width / 2, visibleSize.height * 3 / 4));
+    labelScore->setPosition(Vec2(visibleSize.width * 0.5, visibleSize.height * 0.6));
     labelScore->setColor(Color3B::WHITE);
     this->addChild(labelScore);
 
-    String* playHighScore = String::createWithFormat("%i", highScoreOver);
-    labelScore = Label::createWithTTF(playHighScore->getCString(), Font_Arial, visibleSize.height * 0.1);
-    labelScore->setPosition(Vec2(visibleSize.width * 0.75, visibleSize.height * 3 / 4));
+    String* playHighScore = String::createWithFormat("HighScore %i", highScoreOver);
+    labelScore = Label::createWithTTF(playHighScore->getCString(), Font_Arial, visibleSize.height * 0.05);
+    labelScore->setPosition(Vec2(visibleSize.width * 0.5, visibleSize.height * 0.5));
     labelScore->setColor(Color3B::RED);
     this->addChild(labelScore);
 }

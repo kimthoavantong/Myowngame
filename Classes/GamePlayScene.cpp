@@ -14,8 +14,6 @@ USING_NS_CC;
 
 const char* HIGH_SCORE = "key"; // highscore save in system
 
-
-
 Scene* GamePlayScene::createPhysicsWorld()
 {
     auto scene = GamePlayScene::create();
@@ -164,7 +162,6 @@ void GamePlayScene::createDan()
 // Remove sprite
 void GamePlayScene::spriteMoveFinished(Node* sender)
 {
-    // Hàm này có mỗi công việc là loại bỏ dan ( đang là Sprite) ra khỏi layer của game
     // Ép kiểu Contrỏ Sprite của 1 Node*
     auto sprite = (Sprite*)sender;
     this->removeChild(sprite, true);
@@ -225,13 +222,14 @@ void GamePlayScene::createEnemyMan1() // tạo màn chơi 1
 
     for (int j = 1; j < 5; j++)
     {
-        for (int i = 1; i < 11; i++)
+        for (int i = 1; i < 9; i++)
         {
+            
             auto enemyBig = EnemyBig::create();
-            enemyBig->setPosition(Vec2(-(visibleSize.width + (visibleSize.width*(11*j+i)/22)),visibleSize.height*10/11));
+            enemyBig->setPosition(Vec2(-(visibleSize.width + (150*i)+ (150*8*j) ),visibleSize.height*10/11));
             addChild(enemyBig, 10);
-            auto moveBy1 = MoveBy::create(5+(10 + i + j*8)*0.1, Vec2((visibleSize.width + (visibleSize.width * (11 * j + i) / 22)) + visibleSize.width*(10-j)/10, 0));
-            auto moveBydown1 = MoveBy::create(1.8-(i+j)*0.1, Vec2(0, -(visibleSize.width * (11 - i) / 22)));
+            auto moveBy1 = MoveBy::create(5+(10 + i + j*8)*0.1, Vec2( (visibleSize.width * 2 + 150 * i + 150 * 8 * j - (visibleSize.width * j / 10)), 0));
+            auto moveBydown1 = MoveBy::create(1.5-(i+j)*0.1, Vec2(0, -(visibleSize.height * (10 - i - 1.5 ) / 10)));
             enemyBig->runAction(Sequence::create(moveBy1,moveBydown1,nullptr));
         }
     } 
@@ -351,8 +349,8 @@ bool GamePlayScene::onContactBegin1(PhysicsContact& contact)
                 def->setIntegerForKey(HIGH_SCORE, diem);
                 def->flush();
                 iHighScore = diem;
-                String* highScore = String::createWithFormat("%i", iHighScore);
-                labelhighScore->setString(highScore->getCString());
+                /*String* highScore = String::createWithFormat("%i", iHighScore);
+                labelhighScore->setString(highScore->getCString());*/
             }
 
             if (k == 1) // nếu random k = 1 thì add vật phẩm
@@ -388,8 +386,8 @@ bool GamePlayScene::onContactBegin1(PhysicsContact& contact)
                 def->setIntegerForKey(HIGH_SCORE, diem);
                 def->flush();
                 iHighScore = diem;
-                String* highScore = String::createWithFormat("%i", iHighScore);
-                labelhighScore->setString(highScore->getCString());
+                /*String* highScore = String::createWithFormat("%i", iHighScore);
+                labelhighScore->setString(highScore->getCString());*/
             }
             if (k == 1) // nếu random k = 1 thì add vật phẩm
             {
@@ -407,6 +405,8 @@ bool GamePlayScene::onContactBegin1(PhysicsContact& contact)
         auto enemyBoss1 = dynamic_cast<BossOne*>(b->getNode());
         enemyBoss1->setHealthEnemy(lvDan); // sét máu của quái
         SimpleAudioEngine::getInstance()->playEffect(Music_Effect_DanVaCham, false);
+        SimpleAudioEngine::getInstance()->playEffect(Music_Effect_QuaiBoss, false);
+
         if (enemyBoss1->checkDieBoss == true)
         {
             x1 = b->getPosition().x; // lấy tọa độ khi Boss chết để tạo vật phẩm
@@ -424,8 +424,8 @@ bool GamePlayScene::onContactBegin1(PhysicsContact& contact)
                 def->setIntegerForKey(HIGH_SCORE, diem);
                 def->flush();
                 iHighScore = diem;
-                String* highScore = String::createWithFormat("%i", iHighScore);
-                labelhighScore->setString(highScore->getCString());
+                /*String* highScore = String::createWithFormat("%i", iHighScore);
+                labelhighScore->setString(highScore->getCString());*/
             }
             check = true;
             this->unschedule(schedule_selector(GamePlayScene::addDanBoss1));
@@ -457,8 +457,8 @@ bool GamePlayScene::onContactBegin1(PhysicsContact& contact)
                 def->setIntegerForKey(HIGH_SCORE, diem);
                 def->flush();
                 iHighScore = diem;
-                String* highScore = String::createWithFormat("%i", iHighScore);
-                labelhighScore->setString(highScore->getCString());
+                /*String* highScore = String::createWithFormat("%i", iHighScore);
+                labelhighScore->setString(highScore->getCString());*/
             }
             check = true;
             this->unschedule(schedule_selector(GamePlayScene::addDanBoss1));
@@ -508,8 +508,13 @@ bool GamePlayScene::onContactBegin1(PhysicsContact& contact)
         else if (mang == 0)
         {
             // gameover
+            setGameOver = true;
+
+            SimpleAudioEngine::getInstance()->stopBackgroundMusic(true);
+            SimpleAudioEngine::getInstance()->stopAllEffects();
+            SimpleAudioEngine::getInstance()->playEffect(Music_Effect_GameOver,false);
             keys.clear(); //Kết thúc tất cả các keyboard còn giữ khi kết thúc game
-            auto moveGameOver = GameOver::createScene(diem, iHighScore);
+            auto moveGameOver = GameOver::createScene(diem, iHighScore,setGameOver);
             Director::getInstance()->replaceScene(TransitionFade::create(2,moveGameOver));
         }
     }
@@ -518,6 +523,18 @@ bool GamePlayScene::onContactBegin1(PhysicsContact& contact)
         || (a->getCollisionBitmask() == 100 && b->getCollisionBitmask() == 1))
     {
         lvDan++;
+        diem += 10;
+        String* diemStr = String::createWithFormat("%i", diem);
+        labelDiem->setString(diemStr->getCString());
+        if (diem >= iHighScore)
+        {
+            auto def = UserDefault::sharedUserDefault();
+            def->setIntegerForKey(HIGH_SCORE, diem);
+            def->flush();
+            iHighScore = diem;
+            /*String* highScore = String::createWithFormat("%i", iHighScore);
+            labelhighScore->setString(highScore->getCString());*/
+        }
         String* lvDanSt = String::createWithFormat("%i", lvDan);
         labelLvDan->setString(lvDanSt->getCString());
         
@@ -577,16 +594,18 @@ void GamePlayScene::update(float dt)
         GamePlayScene::addLvDan(x1, y1);
         check = false;
     }
-    if (checkMan == 40)
+    if (checkMan == 32)
     {
         GamePlayScene::createBoss1();
         checkMan++;
     }
-    else if (checkMan == 42)  // win va kết thúc
+    else if (checkMan == 34)  // win va kết thúc
     {
+        setGameOver = false;
         checkMan++;
         keys.clear(); //Kết thúc tất cả các keyboard còn giữ khi kết thúc game
-        auto moveWin = GameOver::createScene(diem, iHighScore);
+        SimpleAudioEngine::getInstance()->stopBackgroundMusic(true);
+        auto moveWin = GameOver::createScene(diem, iHighScore,setGameOver);
         Director::getInstance()->replaceScene(TransitionFade::create(2, moveWin));
     }
 }

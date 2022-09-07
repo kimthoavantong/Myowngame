@@ -80,10 +80,10 @@ bool EnemyBig::init()
 		return false;
 	}
 
-	healthEnemy = 3;
+	healthEnemy = 2;
 
 	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("enemybig.plist", "enemybig.png");
-	spriteEnemyBig = Sprite::createWithSpriteFrameName("enemybig1.png");
+	spriteEnemyBig = Sprite::createWithSpriteFrameName("tile000.png");
 	this->addChild(spriteEnemyBig);
 
 	width = spriteEnemyBig->getContentSize().width;
@@ -91,8 +91,8 @@ bool EnemyBig::init()
 
 	Vector<SpriteFrame*> aniFrameBig;
 	aniFrameBig.reserve(2);
-	aniFrameBig.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("enemybig1.png"));
-	aniFrameBig.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("enemybig2.png"));
+	aniFrameBig.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("tile000.png"));
+	aniFrameBig.pushBack(SpriteFrameCache::getInstance()->getSpriteFrameByName("tile001.png"));
 
 	Animation* animationBig = Animation::createWithSpriteFrames(aniFrameBig, 0.02f);
 	Animate* animateBig = Animate::create(animationBig);

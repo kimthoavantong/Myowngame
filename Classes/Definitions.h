@@ -50,6 +50,8 @@
 #define Music_Effect_QuaiBoss "music/Tiengquaiboss.wav"
 #define Music_Effect_DanVaCham "music/vachamdan.wav"
 #define Music_Effect_Bonus "music/bonus.wav"
+#define Music_Effect_GameOver "music/gameOver.wav"
+
 
 
 

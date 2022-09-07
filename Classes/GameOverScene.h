@@ -9,7 +9,7 @@
 class GameOver : public cocos2d::Scene
 {
 public:
-    static cocos2d::Scene* createScene(int score,int highScore);
+    static cocos2d::Scene* createScene(int score,int highScore,bool setGameOver);
 
     virtual bool init();
     
@@ -19,6 +19,8 @@ public:
     cocos2d::ui::Button* buttonAbouts;
     cocos2d::ui::Button* buttonQuit;
     cocos2d::Label* labelScore;
+    cocos2d::Label* gameOver;
+    cocos2d::Label* labelWin;
     
 
 

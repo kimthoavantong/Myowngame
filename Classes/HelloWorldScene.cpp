@@ -67,7 +67,6 @@ void HelloWorld::addButtonPlay()
             }
             case cocos2d::ui::Widget::TouchEventType::ENDED:
             {
-                
                 auto moveSceneGamePlayScene = GamePlayScene::createPhysicsWorld();
                 Director::getInstance()->replaceScene(TransitionMoveInR::create(2, moveSceneGamePlayScene));
                 break;
