@@ -605,6 +605,7 @@ void GamePlayScene::update(float dt)
         checkMan++;
         keys.clear(); //Kết thúc tất cả các keyboard còn giữ khi kết thúc game
         SimpleAudioEngine::getInstance()->stopBackgroundMusic(true);
+        SimpleAudioEngine::getInstance()->playEffect(Music_Effect_GameWin,false);
         auto moveWin = GameOver::createScene(diem, iHighScore,setGameOver);
         Director::getInstance()->replaceScene(TransitionFade::create(2, moveWin));
     }

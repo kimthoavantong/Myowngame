@@ -44,6 +44,8 @@
 // music
 
 #define Music_Background_one "music/musicBackground.wav"
+#define Music_Background_Menu "music/backgroundMenu.wav"
+#define Music_Background_GameOver "music/backdroundGameOver.wav"
 #define Music_Effect_Die "music/Boom.wav"
 #define Music_Effect_BanDan "music/musicBanDan.wav"
 #define Music_Effect_Click "music/Tiengclickchuot.wav"
@@ -51,6 +53,7 @@
 #define Music_Effect_DanVaCham "music/vachamdan.wav"
 #define Music_Effect_Bonus "music/bonus.wav"
 #define Music_Effect_GameOver "music/gameOver.wav"
+#define Music_Effect_GameWin "music/winGame.wav"
 
 
 
