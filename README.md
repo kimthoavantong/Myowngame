@@ -5,3 +5,7 @@
   + Di chuyển bằng các keyboard: A,W,S,D.
   + Bắn đạn bằng cách ấn vào nút.
   + Chức năng trong game: Tính điểm, lưu điểm cao nhất, add item khi quái chết, chèn âm thanh khi thực hiện các thao tác và va chạm, tạo level đạn và boss.
+
+
+https://github.com/kimthoavantong/Myowngame/assets/31684535/bb088b45-b0c3-4281-b943-cb877109958a
+
